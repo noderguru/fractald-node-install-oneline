@@ -1,7 +1,7 @@
 
 ###clone the repository:
 
-git clone https://github.com/noderguru/fractald-node-install.git
+git clone https://github.com/noderguru/fractald-node-install-oneline.git
 
 ###go to the directory with the project:
 
