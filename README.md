@@ -26,3 +26,13 @@ also the private key will be saved in this directory and file::: /root/fractald_
 ###view logs:
 
 sudo journalctl -u fractald -f --no-hostname -o cat
+
+###delete node:
+
+sudo systemctl stop fractald
+
+rm /etc/systemd/system/fractald.service
+
+rm -rf fractald-0.1.7-x86_64-linux-gnu/
+
+rm -rf .bitcoin
