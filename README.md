@@ -1,14 +1,18 @@
 
 clone the repository:
+
 git clone https://github.com/noderguru/fractald-node-install.git
 
 go to the directory with the project:
+
 cd fractald-node-install
 
-Make the script executable:
+Make the script executable
+:
 chmod +x install_fractald.sh
 
 run the script:
+
 ./install_fractald.sh
 
 or
