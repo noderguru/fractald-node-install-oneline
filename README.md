@@ -5,7 +5,7 @@ git clone https://github.com/noderguru/fractald-node-install-oneline.git
 
 ###go to the directory with the project:
 
-cd fractald-node-install
+cd fractald-node-install-oneline
 
 ###Make the script executable:
 
