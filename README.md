@@ -19,6 +19,10 @@ chmod +x install_fractald.sh
 
 bash install_fractald.sh
 
+__at the end of the installation you will see your server IP and private key (Don't forget to save it)__
+also the private key will be saved in this directory and file::: /root/fractald_wallet_private_key.txt
+
+
 ###view logs:
 
 sudo journalctl -u fractald -f --no-hostname -o cat
