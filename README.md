@@ -20,4 +20,5 @@ or
 bash install_fractald.sh
 
 view logs:
+
 sudo journalctl -u fractald -f --no-hostname -o cat
