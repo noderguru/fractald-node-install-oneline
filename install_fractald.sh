@@ -4,25 +4,25 @@
 sudo apt-get update -y && sudo apt upgrade -y
 sudo apt-get install make build-essential pkg-config libssl-dev unzip tar lz4 gcc git jq -y
 
-# Копируем репозиторий
+# Скачивание и разархивирование файлов в текущую директорию
 wget https://github.com/fractal-bitcoin/fractald-release/releases/download/v0.1.8/fractald-0.1.8-x86_64-linux-gnu.tar.gz
-
-# Разархивируем
 tar -zxvf fractald-0.1.8-x86_64-linux-gnu.tar.gz
+
+# Переход в разархивированную директорию
 cd fractald-0.1.8-x86_64-linux-gnu/
 mkdir data
 
-# Копируем конфигурационный файл
-cp ./bitcoin.conf ./data
+# Копирование конфигурационного файла
+cp ../bitcoin.conf ./data
 
-# Создаем сервисный файл
+# Создание сервисного файла
 sudo tee /etc/systemd/system/fractald.service > /dev/null << EOF
 [Unit]
 Description=Fractal Node
 After=network-online.target
 [Service]
 User=$USER
-ExecStart=/root/fractald-0.1.8-x86_64-linux-gnu/bin/bitcoind -datadir=/root/fractald-0.1.8-x86_64-linux-gnu/data/ -maxtipage=504576000
+ExecStart=$(pwd)/bin/bitcoind -datadir=$(pwd)/data/ -maxtipage=504576000
 Restart=always
 RestartSec=5
 LimitNOFILE=infinity
@@ -30,15 +30,15 @@ LimitNOFILE=infinity
 WantedBy=multi-user.target
 EOF
 
-# Создаем кошелек
+# Создание кошелька
 cd bin
 ./bitcoin-wallet -wallet=wallet -legacy create
 
-# Извлекаем приватный ключ
+# Извлечение приватного ключа
 ./bitcoin-wallet -wallet=/root/.bitcoin/wallets/wallet/wallet.dat -dumpfile=/root/.bitcoin/wallets/wallet/MyPK.dat dump
 PRIVATE_KEY=$(awk -F 'checksum,' '/checksum/ {print $2}' /root/.bitcoin/wallets/wallet/MyPK.dat)
 
-# Перезапускаем сервисный файл
+# Перезапуск сервисного файла
 sudo systemctl daemon-reload
 sudo systemctl enable fractald
 sudo systemctl start fractald
@@ -51,5 +51,5 @@ echo "Wallet Private Key: $PRIVATE_KEY"
 # Запись приватного ключа в файл
 echo "Wallet Private Key: $PRIVATE_KEY" > /root/fractald_wallet_private_key.txt
 
-# Проверка логов
-#sudo journalctl -u fractald -f --no-hostname -o cat
+# Проверка логов (закомментировано)
+# sudo journalctl -u fractald -f --no-hostname -o cat
